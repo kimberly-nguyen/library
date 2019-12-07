@@ -1,0 +1,98 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Library</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+</head>
+
+<body>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+
+<!--<script src="scripts/googlebooks.js"></script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
+
+
+  <script>
+$(document).ready(function(){
+$("#form").submit(function(e){
+e.preventDefault()
+var search = $("#books").val();
+if(search=='')
+{
+ alert("Please enter a book title or author's name in the field");
+}   
+else{
+    console.log("Search is  "+search);
+    $.get("https://www.googleapis.com/books/v1/volumes?q="+search,function(response){
+          for(i=0;i<response.items.length;i++){
+		      $("#result").append([
+                      $("<tr>")
+                        .append("<td>" + response.items[i].volumeInfo.title + "</td>")
+                        .append("<td>" + response.items[i].volumeInfo.authors + "</td>")
+		      .append("<td><a href=" + response.items[i].volumeInfo.previewLink + 
+		      ">Preview</a></td>")
+		      
+                      ]);
+          }
+    }); 
+}
+});
+return false;
+});
+</script>
+
+<!--Menu Bar-->
+<nav class="navbar navbar-inverse">
+<div class="container">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#">Home</a></li>
+    <li><a href="#">Menu 1</a></li>
+    <li><a href="#">Menu 2</a></li>
+  </ul>
+  <br>
+</div>
+</nav>
+
+<div align="center">
+
+<div class="login">
+<h1>Welcome to the Library</h1>
+<br><br>
+<form id="form">
+
+<input type="search" id="books" placeholder="Type the book title or author name here" required="required" />
+
+<!--
+<button class="btn btn-primary btn-large">Search</button>
+-->
+<button type="submit"><i class="fa fa-search"></i></button>
+
+</form>
+
+</div>
+  <table class="table" id="result">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Preview</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+
+
+</body>
+
+</html>
