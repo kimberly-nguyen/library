@@ -3,12 +3,6 @@
 <meta charset="UTF-8">
 <title>Library</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-</head>
-
-<body>
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -21,33 +15,59 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
 
 
+
+
+</head>
+
+<body>
+
+
   <script>
 $(document).ready(function(){
 $("#form").submit(function(e){
 e.preventDefault()
+
+
 var search = $("#books").val();
 if(search=='')
 {
  alert("Please enter a book title or author's name in the field");
+
 }   
 else{
     console.log("Search is  "+search);
+
+
     $.get("https://www.googleapis.com/books/v1/volumes?q="+search,function(response){
+
           for(i=0;i<response.items.length;i++){
+
 		      $("#result").append([
                       $("<tr>")
+
+
                         .append("<td>" + response.items[i].volumeInfo.title + "</td>")
                         .append("<td>" + response.items[i].volumeInfo.authors + "</td>")
+
 		      .append("<td><a href=" + response.items[i].volumeInfo.previewLink + 
 		      ">Preview</a></td>")
 		      
                       ]);
+
+
           }
+
+
     }); 
+
 }
 });
 return false;
 });
+
+
+
+
 </script>
 
 <!--Menu Bar-->
@@ -64,17 +84,20 @@ return false;
 
 <div align="center">
 
-<div class="login">
+<div>
 <h1>Welcome to the Library</h1>
 <br><br>
-<form id="form">
-
-<input type="search" id="books" placeholder="Type the book title or author name here" required="required" />
+<form id="form" class="form-inline">
 
 <!--
-<button class="btn btn-primary btn-large">Search</button>
+<input class="input-large search-query" type="search" id="books" placeholder="Type the book title or author name here"/>
 -->
-<button type="submit"><i class="fa fa-search"></i></button>
+  <div >
+      <input class="form-control" id="books" type="search">
+<button type="submit" class="btn btn-primary">Search</button>
+    </div>
+
+
 
 </form>
 
